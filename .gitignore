@@ -29,7 +29,6 @@ Assets/StreamingAssets/aa*
 /trainer_config.yaml
 /summaries/
 /models/
-ml-agents/
 
 # Python virtual environment
 venv/
