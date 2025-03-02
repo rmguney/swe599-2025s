@@ -181,7 +181,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: 4b5c63179ad280647a86b364134c0be9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 37d058e57933e004594e8ee5668b4f3a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -197,15 +197,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMapRock:
-        m_Texture: {fileID: 2800000, guid: 37d058e57933e004594e8ee5668b4f3a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4b5c63179ad280647a86b364134c0be9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RockTex:
-        m_Texture: {fileID: 2800000, guid: afc76bb4d2789c74e9a3e76302a49e2d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 34255bd709bb3e449b9a194d0ae58ca6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Roughness:
-        m_Texture: {fileID: 2800000, guid: 34255bd709bb3e449b9a194d0ae58ca6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6dba04b982f89bb4ea6e260f0dfb1026, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SandHeight:
@@ -324,7 +324,7 @@ Material:
     - _NormalMultiplier: 0.6
     - _NormalRTDepth: 0.17
     - _NormalRTStrength: 1.04
-    - _NormalScale: 1.05
+    - _NormalScale: 2
     - _NormalScale0: 1
     - _NormalScale1: 1
     - _NormalScale2: 1
@@ -343,16 +343,16 @@ Material:
     - _ParallaxMaxSamples: 50
     - _ParallaxMinSamples: 50
     - _ParallaxStrength: 0
-    - _ParallaxValue: 0.005
+    - _ParallaxValue: 0.001
     - _ParallaxValueMaxSamples: 20
-    - _ParallaxValueMinSamples: 4
+    - _ParallaxValueMinSamples: 2
     - _ProceduralDistance: 5.5
     - _ProceduralStrength: 1.5
     - _ReflectionOpacity: 0
     - _ReflectionStrength: 0.21
     - _RemoveSandStrength: 0.5
     - _RemoveSnowStrength: 0.5
-    - _RockSaturation: 0.5
+    - _RockSaturation: 5
     - _RockScale: 3.93
     - _RoughnessStrength: -0.14
     - _SandNormalScale: 1
@@ -411,7 +411,7 @@ Material:
     - _ProjectedShadowColor: {r: 0.3301887, g: 0.17187454, b: 0.0513973, a: 1}
     - _ReflectionColor: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 0.8}
     - _RimColor: {r: 0.39607844, g: 0.0688183, b: 0, a: 0.7647059}
-    - _RockTint: {r: 0.7372549, g: 0.59607846, b: 0.50980395, a: 1}
+    - _RockTint: {r: 0.89411765, g: 0.62408686, b: 0.62352943, a: 1}
     - _RockTrail: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _Specular0: {r: 1, g: 1, b: 1, a: 1}
