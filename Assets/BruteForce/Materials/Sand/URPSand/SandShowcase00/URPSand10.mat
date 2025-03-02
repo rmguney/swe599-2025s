@@ -24,7 +24,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties: _ShininessRock
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -97,7 +97,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LittleSpec:
-        m_Texture: {fileID: 2800000, guid: e88fb958582e9ee4fb6cba708f211a94, type: 3}
+        m_Texture: {fileID: 2800000, guid: 08b9a6243a9c3d44593ddabdc8fa426f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -181,7 +181,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: cf13e494a504b7647b4b23eedeb41cfb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4b5c63179ad280647a86b364134c0be9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -197,15 +197,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMapRock:
-        m_Texture: {fileID: 2800000, guid: 4347d8c636fa6e246adda9ba24343dfa, type: 3}
+        m_Texture: {fileID: 2800000, guid: 37d058e57933e004594e8ee5668b4f3a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RockTex:
-        m_Texture: {fileID: 2800000, guid: de1e0c5d2a3263e4b82a68543f27f7b1, type: 3}
+        m_Texture: {fileID: 2800000, guid: afc76bb4d2789c74e9a3e76302a49e2d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Roughness:
-        m_Texture: {fileID: 2800000, guid: d8e63b55386293a4892d5e09f5f59eee, type: 3}
+        m_Texture: {fileID: 2800000, guid: 34255bd709bb3e449b9a194d0ae58ca6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SandHeight:
@@ -309,8 +309,8 @@ Material:
     - _LightIntensity: 1.24
     - _LightOffset: 0.257
     - _LittleSpecForce: 0.25
-    - _LittleSpecSize: 3
-    - _MainTexMult: 0.29
+    - _LittleSpecSize: 2
+    - _MainTexMult: 1
     - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0
@@ -321,7 +321,7 @@ Material:
     - _Metallic6: 0
     - _Metallic7: 0
     - _Mode: 0
-    - _NormalMultiplier: 0.5
+    - _NormalMultiplier: 0.6
     - _NormalRTDepth: 0.17
     - _NormalRTStrength: 1.04
     - _NormalScale: 1.05
@@ -352,7 +352,7 @@ Material:
     - _ReflectionStrength: 0.21
     - _RemoveSandStrength: 0.5
     - _RemoveSnowStrength: 0.5
-    - _RockSaturation: 0.91
+    - _RockSaturation: 0.5
     - _RockScale: 3.93
     - _RoughnessStrength: -0.14
     - _SandNormalScale: 1
@@ -395,12 +395,12 @@ Material:
     - _WireframeThickness: 1
     - _ZWrite: 1
     m_Colors:
-    - _BotColor: {r: 0.8773585, g: 0.567547, b: 0.19450872, a: 1}
-    - _Color: {r: 1, g: 0.41667995, b: 0.06132078, a: 1}
+    - _BotColor: {r: 0.8784314, g: 0.34902346, b: 0.19607842, a: 1}
+    - _Color: {r: 0.2509804, g: 0.068383805, b: 0.05882353, a: 0}
     - _CracksStrength: {r: -1.04, g: 0.125, b: -0.13, a: 0.1}
     - _Emission: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FogColor: {r: 1, g: 0.6586302, b: 0, a: 1}
+    - _FogColor: {r: 1, g: 0.34894022, b: 0, a: 1}
     - _FogDirection: {r: 1, g: 0.3, b: 6, a: 0}
     - _IceTint: {r: 0.6745098, g: 0.47506455, b: 0.34901962, a: 1}
     - _IceTrail: {r: 1, g: 0.83357865, b: 0.7688679, a: 1}
@@ -410,8 +410,8 @@ Material:
     - _ParallaxStrength: {r: 0, g: 0.125, b: -0.13, a: 0.1}
     - _ProjectedShadowColor: {r: 0.3301887, g: 0.17187454, b: 0.0513973, a: 1}
     - _ReflectionColor: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 0.8}
-    - _RimColor: {r: 0.49056602, g: 0.32028773, b: 0, a: 0.7647059}
-    - _RockTint: {r: 1, g: 0.7394002, b: 0.36320752, a: 1}
+    - _RimColor: {r: 0.39607844, g: 0.0688183, b: 0, a: 0.7647059}
+    - _RockTint: {r: 0.7372549, g: 0.59607846, b: 0.50980395, a: 1}
     - _RockTrail: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _Specular0: {r: 1, g: 1, b: 1, a: 1}
