@@ -6,7 +6,7 @@ public class BF_RoverController : MonoBehaviour
 {
     public Rigidbody rB;
 
-    private float speedTorque = 70f;
+    private float speedTorque = 120f;
 
     public List<WheelCollider> frontWheels;
     public List<WheelCollider> backWheels;
@@ -29,7 +29,7 @@ public class BF_RoverController : MonoBehaviour
     private Vector2 PlayerInput()
     {
         Vector2 playerMovement = Vector2.zero;
-        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Z))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Z))
         {
             playerMovement.y += 1;
         }
@@ -47,7 +47,7 @@ public class BF_RoverController : MonoBehaviour
         }
         if (jumpReload)
         {
-            if(wheelMem < 4)
+            if (wheelMem < 4)
             {
                 StartCoroutine(WaitCoyoteeJump());
             }
@@ -62,31 +62,31 @@ public class BF_RoverController : MonoBehaviour
 
     private void PlayerMovement(Vector2 movement)
     {
-            rB.maxAngularVelocity = 12f;
+        rB.maxAngularVelocity = 18f;
 
-            float clampValueRot = 35f;
-            float signRot = 1f;
+        float clampValueRot = 35f;
+        float signRot = 1f;
 
-            float TorqueMult = 1.33f;
-            if(movement.y < 0)
-            {
-                clampValueRot = 5f; 
-                signRot = -1f;
-            }
+        float TorqueMult = 1.33f;
+        if (movement.y < 0)
+        {
+            clampValueRot = 5f;
+            signRot = -1f;
+        }
 
-            foreach (WheelCollider wheel in frontWheels)
-            {
-                wheel.steerAngle = movement.x*30f;
-                wheel.motorTorque = TorqueMult * movement.y * 3f;
+        foreach (WheelCollider wheel in frontWheels)
+        {
+            wheel.steerAngle = movement.x * 40f;
+            wheel.motorTorque = TorqueMult * movement.y * 3f;
 
-                ApplyLocalPositionToVisuals(wheel);
-            }                  
-            foreach(WheelCollider wheel in backWheels)
-            {
-                wheel.motorTorque = TorqueMult * movement.y*3f;
+            ApplyLocalPositionToVisuals(wheel);
+        }
+        foreach (WheelCollider wheel in backWheels)
+        {
+            wheel.motorTorque = TorqueMult * movement.y * 3f;
 
-                ApplyLocalPositionToVisuals(wheel);
-            }
+            ApplyLocalPositionToVisuals(wheel);
+        }
 
         rB.AddTorque(new Vector3(-movement.y, 0, -movement.x) * speedTorque * 0.1f, ForceMode.Force);
     }
