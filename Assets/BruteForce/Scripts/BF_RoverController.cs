@@ -62,7 +62,7 @@ public class BF_RoverController : MonoBehaviour
 
     private void PlayerMovement(Vector2 movement)
     {
-        rB.maxAngularVelocity = 18f;
+        rB.maxAngularVelocity = 22f;
 
         float clampValueRot = 35f;
         float signRot = 1f;
