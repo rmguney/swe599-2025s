@@ -52,19 +52,31 @@ Material:
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _EnvironmentReflections: 1
+<<<<<<< HEAD
     - _Metallic: 0.118
     - _QueueOffset: 1
     - _ReceiveShadows: 0
     - _Smoothness: 0
     - _SpecularHighlights: 1
+=======
+    - _Metallic: 0.34
+    - _QueueOffset: 1
+    - _ReceiveShadows: 0
+    - _Smoothness: 0
+>>>>>>> 5b4b3fd865f1463669b7f16f4a2365eaae135837
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 1
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
+<<<<<<< HEAD
     - _BaseColor: {r: 1, g: 0.41960782, b: 0, a: 0}
     - _Color: {r: 1, g: 0.4196078, b: 0, a: 0}
+=======
+    - _BaseColor: {r: 1, g: 0.41960785, b: 0, a: 0}
+    - _Color: {r: 1, g: 0.41960782, b: 0, a: 0}
+>>>>>>> 5b4b3fd865f1463669b7f16f4a2365eaae135837
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &4183935588743732354
