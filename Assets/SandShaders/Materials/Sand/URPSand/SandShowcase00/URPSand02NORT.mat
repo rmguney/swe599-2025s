@@ -28,6 +28,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: afc76bb4d2789c74e9a3e76302a49e2d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMapNew:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -43,6 +47,7 @@ Material:
     - _USEWC: 1
     m_Colors:
     - _BotColor: {r: 0.7529412, g: 0.54901963, b: 0.3019608, a: 1}
+    - _Color: {r: 1, g: 0.19789203, b: 0.07843137, a: 1}
     - _MountColor: {r: 0.37599996, g: 0.37599996, b: 0.37599996, a: 1}
     - _ProjectedShadowColor: {r: 0.6509434, g: 0.42385888, b: 0.13817194, a: 1}
     - _RimColor: {r: 0.7075471, g: 0.2912274, b: 0.12348697, a: 0.8235294}
