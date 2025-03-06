@@ -8,7 +8,7 @@ export default function UnityLoader() {
     const loadUnity = () => {
       const script = document.createElement('script');
       const buildUrl = "/Build";
-      const loaderUrl = buildUrl + "/WebGL.loader.js";
+      const loaderUrl = buildUrl + "/public.loader.js";
       script.src = loaderUrl;
       script.async = true;
       
@@ -17,9 +17,9 @@ export default function UnityLoader() {
         if (!canvas) return;
         
         const config = {
-          dataUrl: buildUrl + "/WebGL.data",
-          frameworkUrl: buildUrl + "/WebGL.framework.js",
-          codeUrl: buildUrl + "/WebGL.wasm",
+          dataUrl: buildUrl + "/public.data",
+          frameworkUrl: buildUrl + "/public.framework.js",
+          codeUrl: buildUrl + "/public.wasm",
           streamingAssetsUrl: "/StreamingAssets",
           companyName: "rmguney",
           productName: "Pebbles",
