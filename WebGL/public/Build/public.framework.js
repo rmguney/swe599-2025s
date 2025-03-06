@@ -1182,13 +1182,13 @@ function dbg(text) {
 // === Body ===
 
 var ASM_CONSTS = {
-  6892512: () => { return Module.webglContextAttributes.premultipliedAlpha; },  
- 6892573: () => { return Module.webglContextAttributes.preserveDrawingBuffer; },  
- 6892637: () => { return Module.webglContextAttributes.powerPreference; },  
- 6892695: () => { Module['emscripten_get_now_backup'] = performance.now; },  
- 6892750: ($0) => { performance.now = function() { return $0; }; },  
- 6892798: ($0) => { performance.now = function() { return $0; }; },  
- 6892846: () => { performance.now = Module['emscripten_get_now_backup']; }
+  6893024: () => { return Module.webglContextAttributes.premultipliedAlpha; },  
+ 6893085: () => { return Module.webglContextAttributes.preserveDrawingBuffer; },  
+ 6893149: () => { return Module.webglContextAttributes.powerPreference; },  
+ 6893207: () => { Module['emscripten_get_now_backup'] = performance.now; },  
+ 6893262: ($0) => { performance.now = function() { return $0; }; },  
+ 6893310: ($0) => { performance.now = function() { return $0; }; },  
+ 6893358: () => { performance.now = Module['emscripten_get_now_backup']; }
 };
 
 

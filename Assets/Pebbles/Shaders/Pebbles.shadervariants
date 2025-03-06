@@ -8,6 +8,9 @@ ShaderVariantCollection:
   m_PrefabAsset: {fileID: 0}
   m_Name: Pebbles
   m_Shaders:
+  - first: {fileID: 4800000, guid: d3f2de729b4255f43a82f1f6a7362f06, type: 3}
+    second:
+      variants: []
   - first: {fileID: 4800000, guid: 9cb6c2402ab496840b903256f4b8383c, type: 3}
     second:
       variants: []
