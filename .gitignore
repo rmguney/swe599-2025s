@@ -11,14 +11,13 @@
 *.aab
 *.unitypackage
 *.app
-*.cubemap
 .gradle/
 crashlytics-build.properties
 Assets/AssetStoreTools*
 Assets/Plugins/Editor/JetBrains*
 Assets/StreamingAssets/aa*
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
-/[Aa]ssets/[Ss]ky[Bb]ox/
+/[Aa]ssets/[Ss]ky[Bb]ox/[Dd]emo/
 
 # ML-Agents specific
 /[Aa]ssets/[Mm][Ll]-[Aa]gents/Timers/

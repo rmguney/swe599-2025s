@@ -64,16 +64,16 @@ public class BF_RoverController : MonoBehaviour
     {
         rB.maxAngularVelocity = 22f;
 
-        float clampValueRot = 35f;
+/*         float clampValueRot = 35f;
         float signRot = 1f;
-
+ */
         float TorqueMult = 1.33f;
-        if (movement.y < 0)
+/*         if (movement.y < 0)
         {
             clampValueRot = 5f;
             signRot = -1f;
         }
-
+ */
         foreach (WheelCollider wheel in frontWheels)
         {
             wheel.steerAngle = movement.x * 40f;

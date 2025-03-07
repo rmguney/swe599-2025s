@@ -1,4 +1,4 @@
-using System.Collections;
+/* using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.MLAgents;
@@ -20,7 +20,6 @@ public class MoveToGoal : Agent
     {
         transform.localPosition = Vector3.zero;
         
-        // Don't reset material if we're displaying a result material
         if (!materialChangeActive)
         {
             globeMeshRenderer.material = defaultMaterial;
@@ -103,3 +102,4 @@ public class MoveToGoal : Agent
         Destroy(tempMaterial);
     }
 }
+ */

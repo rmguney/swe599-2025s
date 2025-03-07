@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Wall
   - Goal
+  - Container
+  - Sample
   layers:
   - Default
   - TransparentFX
