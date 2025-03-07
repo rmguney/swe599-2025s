@@ -8,15 +8,28 @@ using Unity.MLAgents.Sensors;
 public class MoveToGoal : Agent
 {
     [SerializeField] private Transform targetTransform;
+    [SerializeField] private Material winMaterial;
+    [SerializeField] private Material loseMaterial;
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Renderer globeMeshRenderer;
+    
+    private bool materialChangeActive = false;
+    private Coroutine materialResetCoroutine = null;
 
     public override void OnEpisodeBegin()
     {
-        transform.position = Vector3.zero;
+        transform.localPosition = Vector3.zero;
+        
+        // Don't reset material if we're displaying a result material
+        if (!materialChangeActive)
+        {
+            globeMeshRenderer.material = defaultMaterial;
+        }
     }
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.position);
-        sensor.AddObservation(targetTransform.position);
+        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(targetTransform.localPosition);
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
@@ -25,7 +38,7 @@ public class MoveToGoal : Agent
 
         float moveSpeed = 5f;
 
-        transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+        transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
     }
     public override void Heuristic(in ActionBuffers actionsOut)
     {
@@ -39,12 +52,54 @@ public class MoveToGoal : Agent
         if (other.TryGetComponent<Goal>(out Goal goal))
         {
             SetReward(+1f);
+            ChangeMaterialWithDelay(winMaterial, 2f);
             EndEpisode();
         }
-        if (other.TryGetComponent<Wall>(out Wall wall))
+        else if (other.TryGetComponent<Wall>(out Wall wall))
         {
             SetReward(-1f);
+            ChangeMaterialWithDelay(loseMaterial, 2f);
             EndEpisode();
         }
+    }
+    
+    private void ChangeMaterialWithDelay(Material newMaterial, float delay)
+    {
+        materialChangeActive = true;
+        globeMeshRenderer.material = newMaterial;
+        
+        if (materialResetCoroutine != null)
+        {
+            StopCoroutine(materialResetCoroutine);
+        }
+        
+        materialResetCoroutine = StartCoroutine(GraduallyTransitionToDefaultMaterial(delay));
+    }
+    
+    private IEnumerator GraduallyTransitionToDefaultMaterial(float transitionTime)
+    {
+        Material currentMat = globeMeshRenderer.material;
+        Color startColor = currentMat.color;
+        Color targetColor = defaultMaterial.color;
+        
+        float elapsedTime = 0f;
+        
+        Material tempMaterial = new Material(currentMat);
+        globeMeshRenderer.material = tempMaterial;
+        
+        while (elapsedTime < transitionTime)
+        {
+            float t = elapsedTime / transitionTime;
+            tempMaterial.color = Color.Lerp(startColor, targetColor, t);
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        globeMeshRenderer.material = defaultMaterial;
+        materialChangeActive = false;
+        materialResetCoroutine = null;
+        
+        Destroy(tempMaterial);
     }
 }
