@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-export default function UnityLoader({ sceneName = 'Manual', setUnityInstance }) {
+export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance }) {
   const [error, setError] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
@@ -11,7 +11,7 @@ export default function UnityLoader({ sceneName = 'Manual', setUnityInstance }) 
     const loadUnity = () => {
       const script = document.createElement('script');
       
-      const sceneFolder = sceneName === 'AI' ? 'AI' : 'Manual';
+      const sceneFolder = sceneName === 'Inference' ? 'Inference' : 'Heuristic';
       const loaderUrl = `/${sceneFolder}/Build/${sceneFolder}.loader.js`;
       
       console.log(`Loading Unity WebGL build from: ${loaderUrl}`);

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import UnityLoader from './UnityLoader';
 
 export default function SceneSwitcher() {
-  const [activeScene, setActiveScene] = useState('Manual');
+  const [activeScene, setActiveScene] = useState('Heuristic');
   const [unityInstance, setUnityInstance] = useState(null);
   const [isUnloading, setIsUnloading] = useState(false);
 
@@ -49,18 +49,18 @@ export default function SceneSwitcher() {
     <>
       <div className="absolute bottom-4 right-4 flex gap-2">
         <button 
-          className={`${buttonBaseClass} ${activeScene === 'Manual' ? activeButtonClass : ''}`}
-          onClick={() => switchScene('Manual')}
+          className={`${buttonBaseClass} ${activeScene === 'Heuristic' ? activeButtonClass : ''}`}
+          onClick={() => switchScene('Heuristic')}
           disabled={isUnloading}
         >
-          <span className="relative z-10">Manual Mode</span>
+          <span className="relative z-10">Heuristic</span>
         </button>
         <button 
-          className={`${buttonBaseClass} ${activeScene === 'AI' ? activeButtonClass : ''}`}
-          onClick={() => switchScene('AI')}
+          className={`${buttonBaseClass} ${activeScene === 'Inference' ? activeButtonClass : ''}`}
+          onClick={() => switchScene('Inference')}
           disabled={isUnloading}
         >
-          <span className="relative z-10">AI Mode (WIP)</span>
+          <span className="relative z-10">Inference (WIP)</span>
         </button>
         <button 
           className={buttonBaseClass}

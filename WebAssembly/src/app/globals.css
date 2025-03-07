@@ -47,7 +47,7 @@ body {
 #unity-logo {
   width: 154px;
   height: 130px;
-  background: url('/Manual/TemplateData/unity-logo-dark.png') no-repeat center;
+  background: url('/Heuristic/TemplateData/unity-logo-dark.png') no-repeat center;
 }
 
 #unity-progress-bar-empty {
@@ -55,14 +55,14 @@ body {
   height: 18px;
   margin-top: 10px;
   margin-left: 6.5px;
-  background: url('/Manual/TemplateData/progress-bar-empty-dark.png') no-repeat center;
+  background: url('/Heuristic/TemplateData/progress-bar-empty-dark.png') no-repeat center;
 }
 
 #unity-progress-bar-full {
   width: 0%;
   height: 18px;
   margin-top: 10px;
-  background: url('/Manual/TemplateData/progress-bar-full-dark.png') no-repeat center;
+  background: url('/Heuristic/TemplateData/progress-bar-full-dark.png') no-repeat center;
 }
 
 #unity-warning {
