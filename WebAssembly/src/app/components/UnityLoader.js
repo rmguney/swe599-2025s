@@ -31,8 +31,7 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
           console.error("Canvas element not found");
           return;
         }
-        
-        // Enhanced configuration for compatibility
+        // WebGL compatibility options
         const config = {
           dataUrl: `/${sceneFolder}/Build/${sceneFolder}.data.unityweb`,
           frameworkUrl: `/${sceneFolder}/Build/${sceneFolder}.framework.js.unityweb`,
@@ -42,16 +41,13 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
           productName: "Pebbles",
           productVersion: "0.2.0",
           showBanner: unityShowBanner,
-          // Add WebGL compatibility options
           compatibilityCheck: null,
           webglContextAttributes: { 
             preserveDrawingBuffer: true,
             powerPreference: "default",
             failIfMajorPerformanceCaveat: false
           },
-          // Disable some features that might cause problems
           devicePixelRatio: 1,
-          // More lenient error handling
           startOnFirstInput: true
         };
 
@@ -72,11 +68,9 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
               loadingBar.style.display = "none";
             }
             
-            // Fix AudioContext - resume on user interaction
             const resumeAudio = () => {
               if (instance) {
                 try {
-                  // Resume AudioContext
                   const audioContext = instance.Module.WebGLAudioContext;
                   if (audioContext && audioContext.state !== 'running') {
                     audioContext.resume();
@@ -86,13 +80,11 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
                 }
               }
               
-              // Remove event listeners after first interaction
               ['click', 'touchend'].forEach(eventName => {
                 document.removeEventListener(eventName, resumeAudio, true);
               });
             };
             
-            // Add event listeners for user interaction to resume audio
             ['click', 'touchend'].forEach(eventName => {
               document.addEventListener(eventName, resumeAudio, true);
             });
@@ -108,7 +100,6 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
               };
             }
             
-            // Add fullscreen functionality to any element that might trigger fullscreen
             document.querySelectorAll("button").forEach(button => {
               if (button.textContent.trim() === "Fullscreen") {
                 button.onclick = () => {
@@ -202,7 +193,6 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
   };
 
   const handleUseSimpleMode = () => {
-    // Add a URL parameter to indicate simpler rendering settings
     const url = new URL(window.location.href);
     url.searchParams.set('simplemode', 'true');
     window.location.href = url.toString();
@@ -240,14 +230,4 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
       </div>
     );
   }
-
-  return (
-    <div className="unity-loader-status">
-      {loadingProgress > 0 && loadingProgress < 100 && (
-        <div className="unity-mobile-progress">
-          Loading: {loadingProgress}%
-        </div>
-      )}
-    </div>
-  );
 }

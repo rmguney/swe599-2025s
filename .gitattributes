@@ -1,2 +1,27 @@
-# *.wasm filter=lfs diff=lfs merge=lfs -text
-*.cubemap filter=lfs diff=lfs merge=lfs -text
+# large files
+Assets/Packs/**/*.psd filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.tga filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.tif filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.exr filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.hdr filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.wav filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.ogg filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.obj filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.max filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.blend filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.dae filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.mb filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.ma filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.unitypackage filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.aif filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.ttf filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.otf filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.dll filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.zip filter=lfs diff=lfs merge=lfs -text
+Assets/Packs/**/*.cubemap filter=lfs diff=lfs merge=lfs -text

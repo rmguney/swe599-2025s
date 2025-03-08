@@ -21,13 +21,14 @@ body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 #unity-container {
   position: relative;
   width: 100%;
-  height: calc(100vh - 100px);
+  height: 100%;
 }
 
 #unity-canvas {
@@ -47,7 +48,7 @@ body {
 #unity-logo {
   width: 154px;
   height: 130px;
-  background: url('/Heuristic/TemplateData/unity-logo-dark.png') no-repeat center;
+  background: url('/unity-logo.png') no-repeat center;
 }
 
 #unity-progress-bar-empty {
@@ -55,14 +56,14 @@ body {
   height: 18px;
   margin-top: 10px;
   margin-left: 6.5px;
-  background: url('/Heuristic/TemplateData/progress-bar-empty-dark.png') no-repeat center;
+  background: url('/progress-bar-empty.png') no-repeat center;
 }
 
 #unity-progress-bar-full {
   width: 0%;
   height: 18px;
   margin-top: 10px;
-  background: url('/Heuristic/TemplateData/progress-bar-full-dark.png') no-repeat center;
+  background: url('/progress-bar-full.png') no-repeat center;
 }
 
 #unity-warning {
@@ -75,10 +76,6 @@ body {
   display: none;
 }
 
-/* Remove the duplicated button styles since we're using Tailwind now */
-/* .fullscreen-button, .scene-button, etc. removed */
-
-/* Enhanced error display styles */
 .unity-error-overlay {
   position: absolute;
   top: 0;
@@ -174,30 +171,69 @@ body {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Mobile-friendly progress indicator for users who can't see the canvas easily */
-.unity-loader-status {
-  position: absolute;
-  top: 10px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  z-index: 100;
-  pointer-events: none;
-}
-
-.unity-mobile-progress {
-  display: inline-block;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 14px;
-}
-
-/* Ensure mobile WebGL view is properly sized */
 @media (max-width: 768px) {
   #unity-canvas {
     width: 100% !important;
     height: 100% !important;
   }
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  flex: 0 0 auto;
+}
+
+.app-main {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-footer {
+  flex: 0 0 auto;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .app-footer .flex {
+    gap: 12px;
+  }
+  
+  .app-footer button {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-footer .flex {
+    gap: 8px;
+  }
+  
+  .app-footer button {
+    padding: 6px;
+    font-size: 11px;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+.keyboard-key {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  animation: pulse 2s infinite;
+  user-select: none;
 }

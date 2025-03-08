@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: URPSand07
+  m_Shader: {fileID: 4800000, guid: 9cb6c2402ab496840b903256f4b8383c, type: 3}
+  m_Parent: {fileID: 2100000, guid: 50e57119a5802d54083eb4277587fc8a, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - USE_FOG
+  - USE_LOW
+  - USE_RT
+  m_InvalidKeywords:
+  - USE_LS
+  - _TESSELLATION_EDGE
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 8d50fea7137e9c241b550f99f31ecc55, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LittleSpec:
+        m_Texture: {fileID: 2800000, guid: e88fb958582e9ee4fb6cba708f211a94, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 71d8982f77180184fae5f56cde5f4e7d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: 43e067b6869f5974aa33ab56e8eb291a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 2800000, guid: 8bc190f8e74c0cb4096700a2e5256e7f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMapRock:
+        m_Texture: {fileID: 2800000, guid: 8bc190f8e74c0cb4096700a2e5256e7f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RockTex:
+        m_Texture: {fileID: 2800000, guid: ff53fa717b38f134e9cbbe351fe9bac6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Roughness:
+        m_Texture: {fileID: 2800000, guid: edb925e20e56f8148b2852469e4fa605, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SandHeight:
+        m_Texture: {fileID: 2800000, guid: 752dbec9039315b4db423596f5d097b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 2800000, guid: 9e94c447c17aadf46a4ed5f53d6969cc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMapNew:
+        m_Texture: {fileID: 2800000, guid: 752dbec9039315b4db423596f5d097b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _DisplacementColorMult: 0.8
+    - _LightHardness: 0.636
+    - _LightOffset: 0.224
+    - _LittleSpecForce: 0.1
+    - _LittleSpecSize: 3
+    - _MainTexMult: 0.27
+    - _NormalMultiplier: 3.09
+    - _NormalRTDepth: 0.2
+    - _NormalRTStrength: 1.62
+    - _NormalScale: 0.564
+    - _Parallax: 0.005
+    - _RockSaturation: 0.9
+    - _RockScale: 2
+    - _RoughnessStrength: 0.68
+    - _SandScale: 1
+    - _ShininessRock: 16.02
+    - _ShininessSand: 5
+    - _SpecForce: 0.45
+    - _SpecMult: 1
+    - _TransitionPower: 0.12
+    - _TransitionScale: 0.68
+    - _USERT: 1
+    - _USEWC: 0
+    m_Colors:
+    - _BotColor: {r: 0.8396226, g: 0.6653246, b: 0.45545566, a: 1}
+    - _Color: {r: 0.8773585, g: 0.51278967, b: 0.09518514, a: 1}
+    - _MountColor: {r: 0.376, g: 0.376, b: 0.376, a: 1}
+    - _ProjectedShadowColor: {r: 0.7924528, g: 0.38067362, b: 0, a: 1}
+    - _RimColor: {r: 0.4056604, g: 0.18904564, b: 0, a: 0.8666667}
+    - _RockTint: {r: 1, g: 0.73743784, b: 0.30588233, a: 1}
+    - _SpecColor: {r: 1, g: 0.89841676, b: 0.6745283, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

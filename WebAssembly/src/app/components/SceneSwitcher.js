@@ -3,10 +3,33 @@
 import { useState, useEffect } from 'react';
 import UnityLoader from './UnityLoader';
 
-export default function SceneSwitcher() {
+export default function SceneSwitcher({ setActiveSceneProps, setUnityInstanceProps, setIsUnloadingProps }) {
   const [activeScene, setActiveScene] = useState('Heuristic');
   const [unityInstance, setUnityInstance] = useState(null);
   const [isUnloading, setIsUnloading] = useState(false);
+
+  useEffect(() => {
+    if (setActiveSceneProps) setActiveSceneProps(activeScene);
+    if (setUnityInstanceProps) setUnityInstanceProps(unityInstance);
+    if (setIsUnloadingProps) setIsUnloadingProps(isUnloading);
+  }, [activeScene, unityInstance, isUnloading, setActiveSceneProps, setUnityInstanceProps, setIsUnloadingProps]);
+
+  // Expose the switchScene method to the parent component
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const container = document.getElementById('scene-switcher-instance');
+      if (container) {
+        container.switchScene = switchScene;
+      }
+    }
+    
+    return () => {
+      const container = document.getElementById('scene-switcher-instance');
+      if (container) {
+        delete container.switchScene;
+      }
+    };
+  }, [unityInstance]); // Re-attach when unity instance changes
 
   const switchScene = (sceneName) => {
     if (activeScene === sceneName || isUnloading) return;
@@ -42,37 +65,11 @@ export default function SceneSwitcher() {
     }
   };
 
-  const buttonBaseClass = "bg-[rgba(0,0,0,0.5)] text-white px-2 py-1 rounded border border-[#444] transition-all duration-200 hover:bg-[rgba(60,60,60,0.5)] text-xs";
-  const activeButtonClass = "bg-[#222] border-[#dddddd]";
-
   return (
     <>
-      <div className="absolute bottom-4 right-4 flex gap-2">
-        <button 
-          className={`${buttonBaseClass} ${activeScene === 'Heuristic' ? activeButtonClass : ''}`}
-          onClick={() => switchScene('Heuristic')}
-          disabled={isUnloading}
-        >
-          <span className="relative z-10">Heuristic</span>
-        </button>
-        <button 
-          className={`${buttonBaseClass} ${activeScene === 'Inference' ? activeButtonClass : ''}`}
-          onClick={() => switchScene('Inference')}
-          disabled={isUnloading}
-        >
-          <span className="relative z-10">Inference (WIP)</span>
-        </button>
-        <button 
-          className={buttonBaseClass}
-          onClick={() => unityInstance?.SetFullscreen(1)}
-          disabled={!unityInstance}
-        >
-          <span className="relative z-10">Fullscreen</span>
-        </button>
-      </div>
       {isUnloading && (
-        <div className="absolute bottom-14 right-4 bg-black/70 text-white text-xs py-1 px-3 rounded">
-          Switching scene...
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 text-white text-sm py-2 px-4 rounded">
+          Switching to {activeScene}...
         </div>
       )}
       <UnityLoader 
