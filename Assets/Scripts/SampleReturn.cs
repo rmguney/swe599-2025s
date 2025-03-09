@@ -11,8 +11,14 @@ public class SampleReturn : Agent
     [SerializeField] private Material winMaterial;
     [SerializeField] private Material loseMaterial;
     [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material sampleCollectedMaterial;  // Optional: Material to show when carrying a sample
+    [SerializeField] private Material sampleCollectedMaterial; 
     [SerializeField] private Renderer globeMeshRenderer;
+    
+    // Sample spawning
+    [SerializeField] private MeshFilter spawnMeshFilter;
+    [SerializeField] private GameObject samplePrefab;
+    [SerializeField] private int numberOfSamplesToSpawn = 1;
+    private List<GameObject> spawnedSamples = new List<GameObject>();
     
     // Rover components
     [SerializeField] private Rigidbody rB;
@@ -48,6 +54,17 @@ public class SampleReturn : Agent
             currentSample.SetActive(true);
             currentSample = null;
         }
+        
+        // Clean up previously spawned samples
+        foreach (var sample in spawnedSamples)
+        {
+            if (sample != null)
+                Destroy(sample);
+        }
+        spawnedSamples.Clear();
+        
+        // Spawn new samples at random positions on the mesh
+        SpawnSamplesOnMesh();
         
         if (!materialChangeActive)
         {
@@ -241,5 +258,62 @@ public class SampleReturn : Agent
         materialResetCoroutine = null;
         
         Destroy(tempMaterial);
+    }
+    
+    // Spawn samples at random positions on the configured mesh
+    private void SpawnSamplesOnMesh()
+    {
+        if (spawnMeshFilter == null || spawnMeshFilter.mesh == null || samplePrefab == null)
+        {
+            Debug.LogWarning("Cannot spawn samples: Missing mesh or sample prefab");
+            return;
+        }
+        
+        for (int i = 0; i < numberOfSamplesToSpawn; i++)
+        {
+            Vector3 spawnPosition = GetRandomPositionOnMesh(spawnMeshFilter.mesh);
+            GameObject newSample = Instantiate(samplePrefab, spawnPosition, Quaternion.identity);
+            spawnedSamples.Add(newSample);
+        }
+    }
+    
+    // Calculate a random position on the provided mesh
+    private Vector3 GetRandomPositionOnMesh(Mesh mesh)
+    {
+        // Get mesh data
+        Vector3[] vertices = mesh.vertices;
+        int[] triangles = mesh.triangles;
+        
+        if (triangles.Length == 0)
+        {
+            Debug.LogWarning("Mesh has no triangles!");
+            return Vector3.zero;
+        }
+        
+        // Select a random triangle
+        int triangleIndex = Random.Range(0, triangles.Length / 3);
+        
+        // Get the vertices of the triangle
+        Vector3 v1 = vertices[triangles[triangleIndex * 3]];
+        Vector3 v2 = vertices[triangles[triangleIndex * 3 + 1]];
+        Vector3 v3 = vertices[triangles[triangleIndex * 3 + 2]];
+        
+        // Get a random point inside the triangle using barycentric coordinates
+        float r1 = Random.value;
+        float r2 = Random.value;
+        
+        // Use sqrt for uniform distribution
+        r1 = Mathf.Sqrt(r1);
+        
+        // Calculate the random position using barycentric coordinates
+        Vector3 randomPosition = (1 - r1) * v1 + r1 * (1 - r2) * v2 + r1 * r2 * v3;
+        
+        // Convert from local space to world space
+        randomPosition = spawnMeshFilter.transform.TransformPoint(randomPosition);
+        
+        // Optionally, add a small offset to avoid z-fighting or terrain clipping
+        randomPosition += Vector3.up * 0.05f;
+        
+        return randomPosition;
     }
 }

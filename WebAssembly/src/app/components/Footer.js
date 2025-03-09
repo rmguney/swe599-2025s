@@ -1,53 +1,28 @@
 'use client';
 
-export default function Footer({ activeScene, switchScene, unityInstance, isUnloading }) {
-  const buttonBaseClass = "text-neutral-300 px-3 py-1.5 text-sm transition-all duration-200 hover:text-white relative";
-  
-  const getButtonClasses = (sceneName) => {
-    return `${buttonBaseClass} ${
-      activeScene === sceneName 
-        ? "text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-white" 
-        : "hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-0.5 hover:after:bg-white hover:after:opacity-50"
-    }`;
-  };
-
+export default function Footer() {
   return (
-    <footer className="hidden lg:flex bg-[#121212] py-3 px-6 border-t border-[#2a2a2a] w-full flex-shrink-0 z-10 justify-center items-center min-h-[60px] max-h-[60px]">
-      <div className="flex items-center gap-8 lg:-translate-y-0.5">
-        <button 
-          className={getButtonClasses('Heuristic')}
-          onClick={() => switchScene('Heuristic')}
-          disabled={isUnloading}
-        >
-          Heuristic
-        </button>
-        <button 
-          className={getButtonClasses('Agents')}
-          onClick={() => switchScene('Agents')}
-          disabled={isUnloading}
-        >
-          Agents (WIP)
-        </button>
-        <button 
-          className={getButtonClasses('Inference')}
-          onClick={() => switchScene('Inference')}
-          disabled={isUnloading}
-        >
-          Inference (WIP)
-        </button>
+    <footer className="hidden lg:flex bg-black/70 py-3 px-6 w-full flex-shrink-0 z-10 justify-center items-center min-h-[60px] max-h-[60px]">
+      <div className="flex items-center justify-center max-w-4xl">
+        <div className="text-xs text-neutral-400 px-3 max-w-[55%]">
+          <p className="text-center overflow-hidden text-ellipsis">
+            Pebbles: A Mars rover simulation leveraging deep reinforcement learning with Proximal Policy Optimization for autonomous navigation and sample returning tasks
+          </p>
+        </div>
         
-        <div className="h-6 w-px bg-[#2a2a2a]"></div>
+        <div className="h-8 w-px bg-[#2a2a2a] mx-4"></div>
         
-        <button 
-          className={buttonBaseClass + " hover:text-white disabled:opacity-50 disabled:hover:text-neutral-300 flex items-center justify-center"}
-          onClick={() => unityInstance?.SetFullscreen(1)}
-          disabled={!unityInstance}
-          title="Fullscreen"
+        <a 
+          href="https://github.com/rmguney/Pebbles" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="flex items-center gap-1 text-neutral-300 hover:text-white transition-colors duration-200 px-3 py-1 rounded-md hover:underline"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
           </svg>
-        </button>
+          <span className="text-sm">/rmguney</span>
+        </a>
       </div>
     </footer>
   );

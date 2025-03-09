@@ -12,6 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - IS_SAND
   - USE_FOG
   - USE_LOW
   - USE_RT
@@ -299,7 +300,7 @@ Material:
     - _ISADD: 0
     - _ISICE: 0
     - _ISROCK: 0
-    - _ISSAND: 0
+    - _ISSAND: 1
     - _IST: 0
     - _ISUNLIT: 0
     - _IceScale: 1

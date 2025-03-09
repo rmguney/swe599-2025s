@@ -2,19 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import UnityLoader from './UnityLoader';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function SceneSwitcher({ setActiveSceneProps, setUnityInstanceProps, setIsUnloadingProps }) {
+export default function SceneSwitcher({ setActiveSceneProps, setUnityInstanceProps, setIsUnloadingProps, setIsLoadingProps }) {
   const [activeScene, setActiveScene] = useState('Heuristic');
   const [unityInstance, setUnityInstance] = useState(null);
   const [isUnloading, setIsUnloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (setActiveSceneProps) setActiveSceneProps(activeScene);
     if (setUnityInstanceProps) setUnityInstanceProps(unityInstance);
     if (setIsUnloadingProps) setIsUnloadingProps(isUnloading);
-  }, [activeScene, unityInstance, isUnloading, setActiveSceneProps, setUnityInstanceProps, setIsUnloadingProps]);
+    if (setIsLoadingProps) setIsLoadingProps(isLoading);
+  }, [activeScene, unityInstance, isUnloading, isLoading, setActiveSceneProps, setUnityInstanceProps, setIsUnloadingProps, setIsLoadingProps]);
 
-  // Expose the switchScene method to the parent component
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const container = document.getElementById('scene-switcher-instance');
@@ -29,25 +31,22 @@ export default function SceneSwitcher({ setActiveSceneProps, setUnityInstancePro
         delete container.switchScene;
       }
     };
-  }, [unityInstance]); // Re-attach when unity instance changes
+  }, [unityInstance]);
 
   const switchScene = (sceneName) => {
-    if (activeScene === sceneName || isUnloading) return;
+    if (activeScene === sceneName || isUnloading || isLoading) return;
     
     setIsUnloading(true);
     
-    // If we have a unity instance, destroy it before switching
     if (unityInstance) {
       console.log(`Unloading scene: ${activeScene}`);
       
-      // First clear the canvas to indicate scene is unloading
       const canvas = document.getElementById('unity-canvas');
       if (canvas) {
         const ctx = canvas.getContext('2d');
         if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
       
-      // Then properly quit the Unity instance
       unityInstance.Quit().then(() => {
         console.log(`Scene ${activeScene} unloaded successfully`);
         setUnityInstance(null);
@@ -67,14 +66,23 @@ export default function SceneSwitcher({ setActiveSceneProps, setUnityInstancePro
 
   return (
     <>
-      {isUnloading && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 text-white text-sm py-2 px-4 rounded">
-          Switching to {activeScene}...
-        </div>
-      )}
+      <AnimatePresence>
+        {isUnloading && (
+          <motion.div 
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 text-white text-sm py-2 px-4 rounded"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            Switching to {activeScene}...
+          </motion.div>
+        )}
+      </AnimatePresence>
       <UnityLoader 
         sceneName={activeScene} 
         setUnityInstance={setUnityInstance}
+        setIsLoading={setIsLoading}
       />
     </>
   );

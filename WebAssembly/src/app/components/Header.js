@@ -1,14 +1,121 @@
-export default function Header() {
+'use client';
+
+import { useRef, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useNotifications } from './NotificationContext';
+
+export default function Header({ activeScene, switchScene, unityInstance, isUnloading }) {
+  const buttonBaseClass = "text-neutral-300 px-3 py-1.5 text-sm transition-all duration-200 hover:text-white relative cursor-pointer";
+  const disabledClass = "opacity-50 cursor-not-allowed hover:text-neutral-300";
+  const scenes = ['Heuristic', 'Agents', 'Inference'];
+  const containerRef = useRef(null);
+  const buttonRefs = useRef({
+    Heuristic: null,
+    Agents: null,
+    Inference: null
+  });
+  const { addNotification } = useNotifications();
+  
+  const [underlineProps, setUnderlineProps] = useState({ left: 0, width: 0 });
+  
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const activeButton = buttonRefs.current[activeScene];
+    if (!activeButton) return;
+    
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const buttonRect = activeButton.getBoundingClientRect();
+    
+    const left = buttonRect.left - containerRect.left;
+    const width = buttonRect.width;
+    
+    setUnderlineProps({ left, width });
+  }, [activeScene]);
+
+  const handleSceneSwitch = (sceneName) => {
+    if (isUnloading) {
+      // Show notification if user tries to switch while loading
+      addNotification({
+        type: 'info',
+        title: 'Scene Switching Blocked',
+        message: 'Please wait for the current operation to complete before switching scenes.',
+        timeout: 5000
+      });
+      return;
+    }
+    
+    switchScene(sceneName);
+  };
+
+  const handleFullscreenClick = () => {
+    if (!unityInstance) {
+      addNotification({
+        type: 'info',
+        title: 'Fullscreen Unavailable',
+        message: 'Fullscreen mode is available once the scene is fully loaded.',
+        timeout: 5000
+      });
+      return;
+    }
+    
+    unityInstance.SetFullscreen(1);
+  };
+
   return (
-    <header className="hidden lg:flex bg-[#121212] text-white py-3 px-6 justify-between items-center border-b border-[#2a2a2a] min-h-[60px] max-h-[60px]">
-      <div className="font-bold text-lg">Pebbles</div>
-      <div className="flex gap-4">
-        <a href="https://github.com/rmguney/Pebbles" target="_blank" rel="noopener noreferrer" className="text-sm hover:underline flex items-center gap-1">
+    <header className="hidden lg:flex bg-black/70 text-white py-3 px-6 justify-center items-center min-h-[60px] max-h-[60px] shadow-xl">      
+      <div className="flex items-center gap-8 relative" ref={containerRef}>
+        <motion.div 
+          className="absolute bottom-0 h-0.5 bg-white"
+          initial={false}
+          animate={{
+            left: underlineProps.left,
+            width: underlineProps.width
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30
+          }}
+        />
+
+        <button 
+          className={`${activeScene === 'Heuristic' ? "text-white " : ""}${buttonBaseClass} ${isUnloading ? disabledClass : ""}`}
+          onClick={() => handleSceneSwitch('Heuristic')}
+          ref={el => buttonRefs.current.Heuristic = el}
+          style={{ cursor: isUnloading ? 'not-allowed' : 'pointer' }}
+        >
+          Heuristic
+        </button>
+        <button 
+          className={`${activeScene === 'Agents' ? "text-white " : ""}${buttonBaseClass} ${isUnloading ? disabledClass : ""}`}
+          onClick={() => handleSceneSwitch('Agents')}
+          ref={el => buttonRefs.current.Agents = el}
+          style={{ cursor: isUnloading ? 'not-allowed' : 'pointer' }}
+        >
+          Agents
+        </button>
+        <button 
+          className={`${activeScene === 'Inference' ? "text-white " : ""}${buttonBaseClass} ${isUnloading ? disabledClass : ""}`}
+          onClick={() => handleSceneSwitch('Inference')}
+          ref={el => buttonRefs.current.Inference = el}
+          style={{ cursor: isUnloading ? 'not-allowed' : 'pointer' }}
+        >
+          Inference
+        </button>
+        
+        <div className="h-6 w-px bg-[#2a2a2a]"></div>
+        
+        <button 
+          className={`${buttonBaseClass} hover:text-white flex items-center justify-center ${!unityInstance ? disabledClass : ""}`}
+          onClick={handleFullscreenClick}
+          style={{ cursor: !unityInstance ? 'not-allowed' : 'pointer' }}
+          title="Fullscreen"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
           </svg>
-          /rmguney
-        </a>
+        </button>
       </div>
     </header>
   );

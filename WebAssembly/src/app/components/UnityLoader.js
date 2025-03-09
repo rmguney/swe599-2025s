@@ -1,17 +1,28 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useNotifications } from './NotificationContext';
 
-export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance }) {
-  const [error, setError] = useState(null);
+export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance, setIsLoading }) {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
+  const { addNotification } = useNotifications();
   
   useEffect(() => {
     const loadUnity = () => {
+      if (setIsLoading) setIsLoading(true);
+      
       const script = document.createElement('script');
       
-      const sceneFolder = sceneName === 'Inference' ? 'Inference' : 'Heuristic';
+      let sceneFolder;
+      if (sceneName === 'Inference') {
+        sceneFolder = 'Inference';
+      } else if (sceneName === 'Agents') {
+        sceneFolder = 'Agents';
+      } else  if (sceneName === 'Heuristic') {
+        sceneFolder = 'Heuristic';
+      }
+      
       const loaderUrl = `/${sceneFolder}/Build/${sceneFolder}.loader.js`;
       
       console.log(`Loading Unity WebGL build from: ${loaderUrl}`);
@@ -21,7 +32,27 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
       script.onerror = () => {
         const errorMsg = `Failed to load Unity loader script from ${loaderUrl}`;
         console.error(errorMsg);
-        setError(errorMsg);
+        
+        if (setIsLoading) setIsLoading(false);
+        
+        addNotification({
+          type: 'error',
+          title: 'Unity Loader Error',
+          message: errorMsg,
+          details: 'The Unity loader script could not be loaded. This might be due to network issues or missing files.',
+          dismissable: true,
+          actions: [
+            { 
+              label: 'Try Again', 
+              onClick: handleRetry 
+            },
+            { 
+              label: 'Try Simple Mode', 
+              onClick: handleUseSimpleMode,
+              className: 'bg-gray-600 text-white hover:bg-gray-500'
+            }
+          ]
+        });
       };
       
       script.onload = () => {
@@ -29,9 +60,9 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
         const canvas = document.querySelector("#unity-canvas");
         if (!canvas) {
           console.error("Canvas element not found");
+          if (setIsLoading) setIsLoading(false);
           return;
         }
-        // WebGL compatibility options
         const config = {
           dataUrl: `/${sceneFolder}/Build/${sceneFolder}.data.unityweb`,
           frameworkUrl: `/${sceneFolder}/Build/${sceneFolder}.framework.js.unityweb`,
@@ -67,6 +98,8 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
             if (loadingBar) {
               loadingBar.style.display = "none";
             }
+            
+            if (setIsLoading) setIsLoading(false);
             
             const resumeAudio = () => {
               if (instance) {
@@ -109,11 +142,33 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
             });
           }).catch((message) => {
             console.error("Unity instance creation failed:", message);
-            setError({
-              title: "Unity WebGL Initialization Failed",
+            
+            if (setIsLoading) setIsLoading(false);
+            
+            addNotification({
+              type: 'error',
+              title: 'Unity WebGL Initialization Failed',
               message: `Failed to create Unity instance: ${message || "Unknown error"}`,
-              details: "There may be compatibility issues with your browser or graphics hardware."
+              details: 'There may be compatibility issues with your browser or graphics hardware.',
+              dismissable: true,
+              actions: [
+                { 
+                  label: 'Try Again', 
+                  onClick: handleRetry 
+                },
+                { 
+                  label: 'Try Simple Mode', 
+                  onClick: handleUseSimpleMode,
+                  className: 'bg-gray-600 text-white hover:bg-gray-500'
+                },
+                {
+                  label: 'Check WebGL Support',
+                  onClick: () => window.open('https://get.webgl.org', '_blank'),
+                  className: 'bg-transparent border border-gray-500 text-white hover:bg-gray-800'
+                }
+              ]
             });
+            
             const loadingBar = document.querySelector("#unity-loading-bar");
             if (loadingBar) {
               loadingBar.style.display = "none";
@@ -121,11 +176,28 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
           });
         } catch (err) {
           console.error("Exception during Unity initialization:", err);
-          setError({
-            title: "Unity WebGL Exception",
+          
+          if (setIsLoading) setIsLoading(false);
+          
+          addNotification({
+            type: 'error',
+            title: 'Unity WebGL Exception',
             message: `Exception during Unity initialization: ${err.message}`,
-            details: "There may be compatibility issues with your browser or graphics hardware."
+            details: 'There may be compatibility issues with your browser or graphics hardware.',
+            dismissable: true,
+            actions: [
+              { 
+                label: 'Try Again', 
+                onClick: handleRetry 
+              },
+              { 
+                label: 'Try Simple Mode', 
+                onClick: handleUseSimpleMode,
+                className: 'bg-gray-600 text-white hover:bg-gray-500'
+              }
+            ]
           });
+          
           const loadingBar = document.querySelector("#unity-loading-bar");
           if (loadingBar) {
             loadingBar.style.display = "none";
@@ -157,6 +229,13 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
       if (type === 'error') {
         div.style = 'background: red; padding: 10px;';
         console.error("Unity Error:", msg);
+        
+        addNotification({
+          type: 'error',
+          title: 'Unity Error',
+          message: msg,
+          dismissable: true
+        });
       } else {
         if (type === 'warning') {
           div.style = 'background: yellow; padding: 10px;';
@@ -182,10 +261,9 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
         if (context) context.clearRect(0, 0, canvas.width, canvas.height);
       }
     };
-  }, [sceneName, setUnityInstance, isRetrying]);
+  }, [sceneName, setUnityInstance, isRetrying, addNotification, setIsLoading]);
 
   const handleRetry = () => {
-    setError(null);
     setIsRetrying(true);
     setTimeout(() => {
       setIsRetrying(false);
@@ -198,36 +276,5 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance 
     window.location.href = url.toString();
   };
 
-  if (error) {
-    return (
-      <div className="unity-error-overlay">
-        <div className="unity-error-message">
-          <h3>{typeof error === 'object' ? error.title : 'Error Loading Simulation'}</h3>
-          <p>{typeof error === 'object' ? error.message : error}</p>
-          {typeof error === 'object' && error.details && <p className="error-details">{error.details}</p>}
-          
-          <div className="error-info">
-            <p>Common causes:</p>
-            <ul>
-              <li>Unsupported browser or graphics card</li>
-              <li>Outdated graphics drivers</li>
-              <li>WebGL features disabled in your browser</li>
-            </ul>
-          </div>
-          
-          <div className="error-actions">
-            <button onClick={handleRetry} className="retry-button">
-              Try Again
-            </button>
-            <button onClick={handleUseSimpleMode} className="simple-mode-button">
-              Try Simple Mode
-            </button>
-            <a href="https://get.webgl.org" target="_blank" rel="noopener noreferrer" className="webgl-link">
-              Check WebGL Support
-            </a>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  return null;
 }
