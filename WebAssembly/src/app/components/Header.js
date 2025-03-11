@@ -35,7 +35,6 @@ export default function Header({ activeScene, switchScene, unityInstance, isUnlo
 
   const handleSceneSwitch = (sceneName) => {
     if (isUnloading) {
-      // Show notification if user tries to switch while loading
       addNotification({
         type: 'info',
         title: 'Scene Switching Blocked',

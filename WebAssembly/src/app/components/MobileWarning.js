@@ -45,7 +45,7 @@ export default function MobileWarning() {
           >
             <p className="mb-1 text-xs text-left">Small Screen Detected</p>
             <p className="text-neutral-300 text-xs text-left">
-              This website is designed to be viewed at larger screens and some scenes require a keyboard or mouse to control and some screens might still not open due to memory limitation of mobile devices.
+              This website is designed to be viewed at larger screens and some scenes require a keyboard or mouse to control. Some scenes might even not open at all due to memory limitation on mobile devices.
             </p>
             <p className="mt-4 mb-1 text-xs text-left">For the best experience:</p>
             <ul className="ml-5 list-disc text-neutral-300 text-xs text-left">
