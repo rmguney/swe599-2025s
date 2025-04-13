@@ -13,8 +13,8 @@ export function useSceneNotifications(activeScene, unityInstance, isLoading, isU
       
       const sceneDescriptions = {
         Heuristic: "Manually control the Mars rover, navigate terrain, and collect samples.",
+        Agents: "Multiple rover agents leveraging reinforcement learning for collaborative exploration of the environment, physics, controls and object recognition. This scene serves as a respresentation of the training process.",
         Inference: "Watch the AI-trained rover autonomously navigate and collect samples. This scene is still under development and not a representation of the final AI model.",
-        Agents: "Multiple rover agents leveraging reinforcement learning for collaborative exploration. This scene is still under development and not a representation of the final AI model."
       };
       
       addNotification({

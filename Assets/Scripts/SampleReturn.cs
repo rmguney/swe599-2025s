@@ -82,18 +82,17 @@ public class SampleReturn : Agent
         sensor.AddObservation(isCarryingSample); // Add whether we're carrying a sample
     }
 
-    public override void OnActionReceived(ActionBuffers actions)
-    {
-        // Get actions from the neural network or from human input
-        float moveX = actions.ContinuousActions[0]; // Steering (left/right)
-        float moveY = actions.ContinuousActions[1]; // Acceleration/Deceleration (forward/backward)
-        
-        // Create movement vector
-        roverMovement = new Vector2(moveX, moveY);
-        
-        // Apply movement in FixedUpdate
-        RoverMovement(roverMovement);
-    }
+public override void OnActionReceived(ActionBuffers actions)
+{
+    AddReward(-0.001f);
+
+    float moveX = actions.ContinuousActions[0];
+    float moveY = actions.ContinuousActions[1];
+    
+    roverMovement = new Vector2(moveX, moveY);
+    RoverMovement(roverMovement);
+}
+
 
     private void FixedUpdate()
     {

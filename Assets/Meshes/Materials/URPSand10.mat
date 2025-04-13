@@ -12,8 +12,8 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - USE_FOG
-  - USE_RT
+  - IS_SAND
+  - USE_LOW
   m_InvalidKeywords:
   - USE_LS
   - _TESSELLATION_EDGE
@@ -298,7 +298,7 @@ Material:
     - _ISADD: 0
     - _ISICE: 0
     - _ISROCK: 0
-    - _ISSAND: 0
+    - _ISSAND: 1
     - _IST: 0
     - _ISUNLIT: 0
     - _IceScale: 1
@@ -378,10 +378,10 @@ Material:
     - _TransitionScale: 0.36
     - _TransparencyValue: 1
     - _USEDECAL: 0
-    - _USEFOG: 1
+    - _USEFOG: 0
     - _USEINTER: 0
-    - _USELOW: 0
-    - _USERT: 1
+    - _USELOW: 1
+    - _USERT: 0
     - _USEWC: 0
     - _USEWT: 0
     - _UVSec: 0
