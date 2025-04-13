@@ -1,4 +1,4 @@
-# A Mars Rover Simulation Utilizing Deep Reinforcement and Imitation Learning with Proximal Policy Optimization and Generative Adversarial Imitation Learning for Autonomous Navigation and Sample Retrieval
+# Mars Rover Simulation Using Deep Reinforcement and Imitation Learning (PPO & GAIL) for Autonomous Navigation and Sample Retrieval
 
 ## Table of Contents
 1. [Introduction](#introduction)

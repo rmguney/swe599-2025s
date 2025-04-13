@@ -4,9 +4,10 @@ export default function Footer() {
   return (
     <footer className="hidden lg:flex bg-black/70 py-3 px-6 w-full flex-shrink-0 z-10 justify-center items-center min-h-[60px] max-h-[60px]">
       <div className="flex items-center justify-center max-w-4xl">
-        <div className="text-xs text-neutral-400 px-3 max-w-[69%]">
+        <div className="text-xs text-neutral-400 px-3 max-w-[50%]">
           <p className="text-center overflow-hidden text-ellipsis">
-          A Mars rover simulation utilizing deep reinforcement and imitation learning with proximal policy optimization and generative adversarial imitation learning for autonomous navigation and sample retrieval tasks          </p>
+          Pebbles: A Mars rover simulation using deep reinforcement and imitation learning (PPO & GAIL) for autonomous navigation and sample retrieval.
+          </p>
         </div>
         
         <div className="h-8 w-px bg-[#2a2a2a] mx-4"></div>
