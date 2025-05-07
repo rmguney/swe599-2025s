@@ -7,11 +7,11 @@ import { useNotifications } from './NotificationContext';
 export default function Header({ activeScene, switchScene, unityInstance, isUnloading }) {
   const buttonBaseClass = "text-neutral-300 px-3 py-1.5 text-sm transition-all duration-200 hover:text-white relative cursor-pointer";
   const disabledClass = "opacity-50 cursor-not-allowed hover:text-neutral-300";
-  const scenes = ['Heuristic', 'Agents', 'Inference'];
+  const scenes = ['Heuristic', 'Training', 'Inference'];
   const containerRef = useRef(null);
   const buttonRefs = useRef({
     Heuristic: null,
-    Agents: null,
+    Training: null,
     Inference: null
   });
   const { addNotification } = useNotifications();
@@ -87,20 +87,20 @@ export default function Header({ activeScene, switchScene, unityInstance, isUnlo
           Heuristic
         </button>
         <button 
-          className={`${activeScene === 'Agents' ? "text-white " : ""}${buttonBaseClass} ${isUnloading ? disabledClass : ""}`}
-          onClick={() => handleSceneSwitch('Agents')}
-          ref={el => buttonRefs.current.Agents = el}
-          style={{ cursor: isUnloading ? 'not-allowed' : 'pointer' }}
-        >
-          Agents
-        </button>
-        <button 
           className={`${activeScene === 'Inference' ? "text-white " : ""}${buttonBaseClass} ${isUnloading ? disabledClass : ""}`}
           onClick={() => handleSceneSwitch('Inference')}
           ref={el => buttonRefs.current.Inference = el}
           style={{ cursor: isUnloading ? 'not-allowed' : 'pointer' }}
         >
           Inference
+        </button>
+        <button 
+          className={`${activeScene === 'Training' ? "text-white " : ""}${buttonBaseClass} ${isUnloading ? disabledClass : ""}`}
+          onClick={() => handleSceneSwitch('Training')}
+          ref={el => buttonRefs.current.Training = el}
+          style={{ cursor: isUnloading ? 'not-allowed' : 'pointer' }}
+        >
+          Training
         </button>
         
         <div className="h-6 w-px bg-[#2a2a2a]"></div>

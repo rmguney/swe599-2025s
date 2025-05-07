@@ -7,14 +7,14 @@ import { useNotifications } from './NotificationContext';
 export default function MobileHeader({ activeScene, switchScene, unityInstance, isUnloading }) {
   const buttonBaseClass = "text-neutral-300 px-3 py-1.5 text-sm transition-all duration-200 hover:text-white relative focus:outline-none";
   const disabledClass = "opacity-50 cursor-not-allowed hover:text-neutral-300";
-  const scenes = ['Heuristic', 'Inference', 'Agents'];
+  const scenes = ['Heuristic', 'Inference', 'Training'];
   const { addNotification } = useNotifications();
   
   const containerRef = useRef(null);
   const buttonRefs = useRef({
     Heuristic: null,
     Inference: null,
-    Agents: null
+    Training: null
   });
   
   const [underlineProps, setUnderlineProps] = useState({ left: 0, width: 0 });
@@ -84,12 +84,12 @@ export default function MobileHeader({ activeScene, switchScene, unityInstance, 
             Inference
           </button>
           <button 
-            className={`${activeScene === 'Agents' ? "text-white " : ""}${buttonBaseClass} ${isUnloading ? disabledClass : ""}`}
-            onClick={() => handleSceneSwitch('Agents')}
-            ref={el => buttonRefs.current.Agents = el}
+            className={`${activeScene === 'Training' ? "text-white " : ""}${buttonBaseClass} ${isUnloading ? disabledClass : ""}`}
+            onClick={() => handleSceneSwitch('Training')}
+            ref={el => buttonRefs.current.Training = el}
             style={{ cursor: isUnloading ? 'not-allowed' : 'pointer' }}
           >
-            Agents
+            Training
           </button>
           
           <div className="h-6 w-px bg-[#2a2a2a] mx-2"></div>

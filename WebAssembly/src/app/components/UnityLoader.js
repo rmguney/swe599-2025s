@@ -17,8 +17,8 @@ export default function UnityLoader({ sceneName = 'Heuristic', setUnityInstance,
       let sceneFolder;
       if (sceneName === 'Inference') {
         sceneFolder = 'Inference';
-      } else if (sceneName === 'Agents') {
-        sceneFolder = 'Agents';
+      } else if (sceneName === 'Training') {
+        sceneFolder = 'Training';
       } else  if (sceneName === 'Heuristic') {
         sceneFolder = 'Heuristic';
       }

@@ -27,6 +27,8 @@ Assets/StreamingAssets/aa*
 /[Aa]ssets/[Mm][Ll]-[Aa]gents/Models.meta
 /summaries/
 /models/
+/results/
+/demo/
 
 # Python virtual environment
 venv/

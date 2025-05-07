@@ -30,9 +30,11 @@ public class SampleReturn : Agent
     // Sample tracking
     private bool isCarryingSample = false;
     private GameObject currentSample = null;
+    private Transform sampleAttachPoint; // Point where collected samples will be attached
     
     private bool materialChangeActive = false;
     private Coroutine materialResetCoroutine = null;
+    private float lastSampleDistance = float.MaxValue; // For distance-based rewards
 
     public override void OnEpisodeBegin()
     {
@@ -52,6 +54,7 @@ public class SampleReturn : Agent
         if (currentSample != null)
         {
             currentSample.SetActive(true);
+            currentSample.transform.parent = null;
             currentSample = null;
         }
         
@@ -70,6 +73,21 @@ public class SampleReturn : Agent
         {
             globeMeshRenderer.material = defaultMaterial;
         }
+        
+        // Reset the last sample distance
+        lastSampleDistance = GetDistanceToNearestSample();
+    }
+
+    private void Awake()
+    {
+        // Create sample attachment point if it doesn't exist
+        if (sampleAttachPoint == null)
+        {
+            GameObject attachPoint = new GameObject("SampleAttachPoint");
+            sampleAttachPoint = attachPoint.transform;
+            sampleAttachPoint.parent = transform;
+            sampleAttachPoint.localPosition = new Vector3(0, 0.5f, 0); // Adjust position as needed
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -80,20 +98,67 @@ public class SampleReturn : Agent
         sensor.AddObservation(transform.forward);
         sensor.AddObservation(rB.velocity);
         sensor.AddObservation(isCarryingSample); // Add whether we're carrying a sample
+        
+        // Add nearest sample information if not carrying one
+        if (!isCarryingSample && spawnedSamples.Count > 0)
+        {
+            GameObject nearestSample = GetNearestSample();
+            if (nearestSample != null)
+            {
+                // Direction to nearest sample
+                Vector3 directionToSample = (nearestSample.transform.position - transform.position).normalized;
+                sensor.AddObservation(directionToSample);
+                
+                // Distance to nearest sample
+                float distanceToSample = Vector3.Distance(transform.position, nearestSample.transform.position);
+                sensor.AddObservation(distanceToSample);
+            }
+            else
+            {
+                // No valid samples, add zero vectors
+                sensor.AddObservation(Vector3.zero);
+                sensor.AddObservation(0f);
+            }
+        }
+        else
+        {
+            // If carrying a sample or no samples exist, add placeholder observations
+            sensor.AddObservation(Vector3.zero);
+            sensor.AddObservation(0f);
+        }
     }
 
-public override void OnActionReceived(ActionBuffers actions)
-{
-    AddReward(-0.001f);
+    public override void OnActionReceived(ActionBuffers actions)
+    {
+        AddReward(-0.001f);
 
-    float moveX = actions.ContinuousActions[0];
-    float moveY = actions.ContinuousActions[1];
+        float moveX = actions.ContinuousActions[0];
+        float moveY = actions.ContinuousActions[1];
+        
+        roverMovement = new Vector2(moveX, moveY);
+        RoverMovement(roverMovement);
+        
+        // Add distance-based rewards to encourage approaching samples
+        if (!isCarryingSample)
+        {
+            float currentDistance = GetDistanceToNearestSample();
+            
+            // Reward for getting closer to a sample
+            if (currentDistance < lastSampleDistance)
+            {
+                AddReward(0.001f);
+            }
+            
+            lastSampleDistance = currentDistance;
+        }
+        else if (isCarryingSample)
+        {
+            // Reward for getting closer to the target when carrying a sample
+            float distanceToTarget = Vector3.Distance(transform.position, targetTransform.position);
+            AddReward(0.0005f / (distanceToTarget + 1));
+        }
+    }
     
-    roverMovement = new Vector2(moveX, moveY);
-    RoverMovement(roverMovement);
-}
-
-
     private void FixedUpdate()
     {
         // Movement is applied in OnActionReceived or Heuristic
@@ -189,31 +254,41 @@ public override void OnActionReceived(ActionBuffers actions)
             // Collect the sample
             isCarryingSample = true;
             currentSample = sample.gameObject;
-            sample.gameObject.SetActive(false);
             
-            // Optional: Give small positive reward for collecting a sample
-            AddReward(0.5f);
+            // Attach the sample visually to the rover instead of hiding it
+            currentSample.transform.parent = sampleAttachPoint;
+            currentSample.transform.localPosition = Vector3.zero;
+            currentSample.transform.localRotation = Quaternion.identity;
+            
+            // Disable collider but keep visuals
+            if (currentSample.GetComponent<Collider>() != null)
+            {
+                currentSample.GetComponent<Collider>().enabled = false;
+            }
+            
+            // Scale down the sample for better visualization
+            currentSample.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            
+            AddReward(3.0f);
             
             // Optional: Change material to indicate sample collection
             if (sampleCollectedMaterial != null)
             {
                 globeMeshRenderer.material = sampleCollectedMaterial;
             }
-            
-            // Note: We don't end the episode here, rover needs to return to container
         }
         // Check for container interaction (win condition)
         else if (other.TryGetComponent<Container>(out Container container) && isCarryingSample)
         {
             // Sample successfully returned to container
-            SetReward(1.0f);
+            SetReward(10.0f);
             ChangeMaterialWithDelay(winMaterial, 2f);
             EndEpisode();
         }
         // Wall collision (lose condition)
         else if (other.TryGetComponent<Wall>(out Wall wall))
         {
-            SetReward(-1f);
+            SetReward(-3.0f);
             ChangeMaterialWithDelay(loseMaterial, 2f);
             EndEpisode();
         }
@@ -315,4 +390,42 @@ public override void OnActionReceived(ActionBuffers actions)
         
         return randomPosition;
     }
+    
+    // Helper function to get the nearest sample
+    private GameObject GetNearestSample()
+    {
+        if (spawnedSamples.Count == 0)
+            return null;
+            
+        GameObject nearestSample = null;
+        float nearestDistance = float.MaxValue;
+        
+        foreach (GameObject sample in spawnedSamples)
+        {
+            // Skip if the sample is null or inactive
+            if (sample == null || !sample.activeInHierarchy)
+                continue;
+                
+            float distance = Vector3.Distance(transform.position, sample.transform.position);
+            if (distance < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearestSample = sample;
+            }
+        }
+        
+        return nearestSample;
+    }
+    
+    // Helper function to get the distance to the nearest sample
+    private float GetDistanceToNearestSample()
+    {
+        GameObject nearest = GetNearestSample();
+        if (nearest == null)
+            return float.MaxValue;
+            
+        return Vector3.Distance(transform.position, nearest.transform.position);
+    }
 }
+
+
